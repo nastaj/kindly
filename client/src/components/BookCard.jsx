@@ -23,8 +23,14 @@ function lengthText(book) {
   return book.pages ? `${book.pages} pages` : "";
 }
 
-export default function BookCard({ book }) {
+export default function BookCard({ book, onRemove }) {
   const length = lengthText(book);
+
+  function confirmRemove() {
+    if (window.confirm(`Remove "${book.title}" from your shelf?`)) {
+      onRemove(book._id);
+    }
+  }
 
   return (
     <article className="flex flex-col overflow-hidden rounded-xl border border-stone-200 bg-white shadow-sm">
@@ -54,6 +60,13 @@ export default function BookCard({ book }) {
           {formatLabels[book.format]}
           {length && <span> · {length}</span>}
         </p>
+        <button
+          type="button"
+          onClick={confirmRemove}
+          className="mt-3 rounded-md border border-red-200 px-3 py-1.5 text-sm font-medium text-red-700 transition-colors hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-red-600/50"
+        >
+          Delete
+        </button>
       </div>
     </article>
   );

@@ -19,6 +19,18 @@ export default function ShelfPage() {
       .finally(() => setIsLoading(false));
   }, []);
 
+  function removeBook(bookId) {
+    axios
+      .delete(`${BOOKS_URL}/${bookId}`)
+      .then(() => {
+        setBooks(books.filter((book) => book._id !== bookId));
+        setErrorMessage("");
+      })
+      .catch(() =>
+        setErrorMessage("Could not delete that book. Please try again."),
+      );
+  }
+
   const shelfIsEmpty = !isLoading && !errorMessage && books.length === 0;
 
   return (
@@ -44,7 +56,7 @@ export default function ShelfPage() {
         </p>
       )}
 
-      {books.length > 0 && <BookGrid books={books} />}
+      {books.length > 0 && <BookGrid books={books} onRemove={removeBook} />}
     </section>
   );
 }
