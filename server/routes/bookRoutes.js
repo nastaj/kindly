@@ -33,4 +33,18 @@ router.get('/:id', async (req, res) => {
   }
 });
 
+router.post('/', async (req, res) => {
+  try {
+    const book = await Book.create(req.body);
+    res.status(201).json(book);
+  } catch (error) {
+    if (error.name === 'ValidationError') {
+      return res.status(400).json({ message: error.message });
+    }
+
+    console.error('Could not add book:', error.message);
+    res.status(500).json({ message: 'Could not add book' });
+  }
+});
+
 export default router;
