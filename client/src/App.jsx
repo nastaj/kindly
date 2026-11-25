@@ -1,8 +1,26 @@
+import { BrowserRouter, Routes, Route } from 'react-router';
+import SiteNav from './components/SiteNav.jsx';
+import SiteFooter from './components/SiteFooter.jsx';
+import HomePage from './pages/HomePage.jsx';
+import ShelfPage from './pages/ShelfPage.jsx';
+import AddBookPage from './pages/AddBookPage.jsx';
+import EditBookPage from './pages/EditBookPage.jsx';
+
 export default function App() {
   return (
-    <main className="min-h-screen bg-stone-50 px-6 py-16 text-stone-800">
-      <h1 className="text-4xl font-bold text-emerald-700">Kindly</h1>
-      <p className="mt-2 text-lg text-stone-600">Your reading shelf.</p>
-    </main>
+    <BrowserRouter>
+      <div className="flex min-h-screen flex-col bg-stone-50 text-stone-800">
+        <SiteNav />
+        <main className="mx-auto w-full max-w-5xl flex-1 px-6 py-10">
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/shelf" element={<ShelfPage />} />
+            <Route path="/add" element={<AddBookPage />} />
+            <Route path="/edit/:id" element={<EditBookPage />} />
+          </Routes>
+        </main>
+        <SiteFooter />
+      </div>
+    </BrowserRouter>
   );
 }
