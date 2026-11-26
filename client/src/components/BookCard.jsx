@@ -12,6 +12,11 @@ const badgeClasses = {
   finished: "bg-emerald-100 text-emerald-800",
 };
 
+const nextShelf = {
+  "want-to-read": { status: "reading", label: "Start reading" },
+  reading: { status: "finished", label: "Mark as finished" },
+};
+
 const formatLabels = {
   print: "Print",
   ebook: "Ebook",
@@ -25,8 +30,9 @@ function lengthText(book) {
   return book.pages ? `${book.pages} pages` : "";
 }
 
-export default function BookCard({ book, onRemove }) {
+export default function BookCard({ book, onRemove, onMove }) {
   const length = lengthText(book);
+  const nextMove = nextShelf[book.status];
 
   function confirmRemove() {
     if (window.confirm(`Remove "${book.title}" from your shelf?`)) {
@@ -62,20 +68,31 @@ export default function BookCard({ book, onRemove }) {
           {formatLabels[book.format]}
           {length && <span> · {length}</span>}
         </p>
-        <div className="mt-3 flex gap-2">
-          <Link
-            to={`/edit/${book._id}`}
-            className="flex-1 rounded-md border border-stone-300 px-3 py-1.5 text-center text-sm font-medium text-stone-700 transition-colors hover:bg-stone-50 focus:outline-none focus:ring-2 focus:ring-emerald-600/50"
-          >
-            Edit
-          </Link>
-          <button
-            type="button"
-            onClick={confirmRemove}
-            className="flex-1 rounded-md border border-red-200 px-3 py-1.5 text-sm font-medium text-red-700 transition-colors hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-red-600/50"
-          >
-            Delete
-          </button>
+        <div className="mt-3 flex flex-col gap-2">
+          {nextMove && (
+            <button
+              type="button"
+              onClick={() => onMove(book._id, nextMove.status)}
+              className="rounded-md bg-emerald-700 px-3 py-1.5 text-sm font-medium text-white transition-colors hover:bg-emerald-800 focus:outline-none focus:ring-2 focus:ring-emerald-600/50"
+            >
+              {nextMove.label}
+            </button>
+          )}
+          <div className="flex gap-2">
+            <Link
+              to={`/edit/${book._id}`}
+              className="flex-1 rounded-md border border-stone-300 px-3 py-1.5 text-center text-sm font-medium text-stone-700 transition-colors hover:bg-stone-50 focus:outline-none focus:ring-2 focus:ring-emerald-600/50"
+            >
+              Edit
+            </Link>
+            <button
+              type="button"
+              onClick={confirmRemove}
+              className="flex-1 rounded-md border border-red-200 px-3 py-1.5 text-sm font-medium text-red-700 transition-colors hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-red-600/50"
+            >
+              Delete
+            </button>
+          </div>
         </div>
       </div>
     </article>
