@@ -3,6 +3,7 @@ import { Link } from "react-router";
 import axios from "axios";
 import BookGrid from "../components/BookGrid.jsx";
 import ShelfTabs from "../components/ShelfTabs.jsx";
+import SearchBar from "../components/SearchBar.jsx";
 import { BOOKS_URL } from "../api.js";
 
 export default function ShelfPage() {
@@ -10,6 +11,7 @@ export default function ShelfPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
   const [activeShelf, setActiveShelf] = useState("all");
+  const [searchText, setSearchText] = useState("");
 
   useEffect(() => {
     axios
@@ -47,12 +49,23 @@ export default function ShelfPage() {
       );
   }
 
-  const visibleBooks =
-    activeShelf === "all"
-      ? books
-      : books.filter((book) => book.status === activeShelf);
+  function isOnActiveShelf(book) {
+    return activeShelf === "all" || book.status === activeShelf;
+  }
+
+  function matchesSearch(book) {
+    const searchTerm = searchText.trim().toLowerCase();
+    return (
+      book.title.toLowerCase().includes(searchTerm) ||
+      book.author.toLowerCase().includes(searchTerm)
+    );
+  }
+
+  const visibleBooks = books.filter(
+    (book) => isOnActiveShelf(book) && matchesSearch(book),
+  );
   const shelfIsEmpty = !isLoading && !errorMessage && books.length === 0;
-  const tabIsEmpty = books.length > 0 && visibleBooks.length === 0;
+  const nothingMatches = books.length > 0 && visibleBooks.length === 0;
 
   return (
     <section>
@@ -78,10 +91,17 @@ export default function ShelfPage() {
       )}
 
       {books.length > 0 && (
-        <ShelfTabs activeShelf={activeShelf} onSelect={setActiveShelf} />
+        <>
+          <ShelfTabs activeShelf={activeShelf} onSelect={setActiveShelf} />
+          <SearchBar searchText={searchText} onSearchChange={setSearchText} />
+        </>
       )}
-      {tabIsEmpty && (
-        <p className="mt-6 text-stone-600">No books on this shelf yet.</p>
+      {nothingMatches && (
+        <p className="mt-6 text-stone-600">
+          {searchText.trim()
+            ? "No books match your search."
+            : "No books on this shelf yet."}
+        </p>
       )}
       {visibleBooks.length > 0 && (
         <BookGrid
