@@ -1,3 +1,5 @@
+import { Link } from "react-router";
+
 const shelfLabels = {
   "want-to-read": "Want to read",
   reading: "Reading",
@@ -60,13 +62,21 @@ export default function BookCard({ book, onRemove }) {
           {formatLabels[book.format]}
           {length && <span> · {length}</span>}
         </p>
-        <button
-          type="button"
-          onClick={confirmRemove}
-          className="mt-3 rounded-md border border-red-200 px-3 py-1.5 text-sm font-medium text-red-700 transition-colors hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-red-600/50"
-        >
-          Delete
-        </button>
+        <div className="mt-3 flex gap-2">
+          <Link
+            to={`/edit/${book._id}`}
+            className="flex-1 rounded-md border border-stone-300 px-3 py-1.5 text-center text-sm font-medium text-stone-700 transition-colors hover:bg-stone-50 focus:outline-none focus:ring-2 focus:ring-emerald-600/50"
+          >
+            Edit
+          </Link>
+          <button
+            type="button"
+            onClick={confirmRemove}
+            className="flex-1 rounded-md border border-red-200 px-3 py-1.5 text-sm font-medium text-red-700 transition-colors hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-red-600/50"
+          >
+            Delete
+          </button>
+        </div>
       </div>
     </article>
   );
