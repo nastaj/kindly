@@ -103,7 +103,7 @@ export default function ShelfPage() {
             : "No books on this shelf yet."}
         </p>
       )}
-      {visibleBooks.length > 0 && (
+      {books.length > 0 && (
         <BookGrid
           books={visibleBooks}
           onRemove={removeBook}

@@ -42,7 +42,7 @@ export default function BookCard({ book, onRemove, onMove }) {
   }
 
   return (
-    <article className="flex flex-col overflow-hidden rounded-xl border border-stone-200 bg-white shadow-sm">
+    <article className="flex h-full flex-col overflow-hidden rounded-xl border border-stone-200 bg-white shadow-sm">
       {book.cover ? (
         <img
           src={book.cover}
