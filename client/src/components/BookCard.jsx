@@ -1,4 +1,5 @@
 import { Link } from "react-router";
+import StarRating from "./StarRating.jsx";
 
 const shelfLabels = {
   "want-to-read": "Want to read",
@@ -64,6 +65,9 @@ export default function BookCard({ book, onRemove, onMove }) {
           {book.title}
         </h2>
         <p className="text-sm text-stone-600">{book.author}</p>
+        {book.status === "finished" && book.rating && (
+          <StarRating rating={book.rating} />
+        )}
         <p className="mt-auto pt-2 text-xs text-stone-500">
           {formatLabels[book.format]}
           {length && <span> · {length}</span>}

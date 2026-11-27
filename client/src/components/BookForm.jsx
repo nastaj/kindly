@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import StarRating from './StarRating.jsx';
 
 const labelClasses = 'flex flex-col gap-1 text-sm font-medium text-stone-700';
 const fieldClasses =
@@ -10,6 +11,10 @@ export default function BookForm({ startingBook, onSave, saveLabel }) {
   function updateField(event) {
     const { name, value } = event.target;
     setBook({ ...book, [name]: value });
+  }
+
+  function updateRating(star) {
+    setBook({ ...book, rating: star === book.rating ? '' : star });
   }
 
   function submitBook(event) {
@@ -109,6 +114,16 @@ export default function BookForm({ startingBook, onSave, saveLabel }) {
           <option value="finished">Finished</option>
         </select>
       </label>
+
+      {book.status === 'finished' && (
+        <div className={labelClasses}>
+          <span>Rating</span>
+          <StarRating rating={book.rating} onRate={updateRating} />
+          <span className="text-xs font-normal text-stone-500">
+            Click a star to rate. Click it again to clear.
+          </span>
+        </div>
+      )}
 
       <div className="flex justify-end sm:col-span-2">
         <button

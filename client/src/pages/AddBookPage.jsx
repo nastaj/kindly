@@ -12,6 +12,7 @@ const emptyBook = {
   minutes: '',
   format: 'print',
   status: 'want-to-read',
+  rating: '',
 };
 
 export default function AddBookPage() {

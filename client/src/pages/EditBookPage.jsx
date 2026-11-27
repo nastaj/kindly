@@ -13,6 +13,7 @@ function toFormValues(book) {
     minutes: book.minutes || '',
     format: book.format,
     status: book.status,
+    rating: book.rating || '',
   };
 }
 
