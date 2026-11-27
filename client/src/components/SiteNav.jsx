@@ -14,7 +14,7 @@ export default function SiteNav() {
         <Link to="/" className="text-2xl font-bold text-emerald-700">
           Kindly
         </Link>
-        <div className="flex gap-2">
+        <div className="flex flex-wrap gap-2">
           <NavLink to="/" end className={linkClasses}>
             Home
           </NavLink>
@@ -23,6 +23,9 @@ export default function SiteNav() {
           </NavLink>
           <NavLink to="/add" className={linkClasses}>
             Add book
+          </NavLink>
+          <NavLink to="/stats" className={linkClasses}>
+            Stats
           </NavLink>
         </div>
       </div>

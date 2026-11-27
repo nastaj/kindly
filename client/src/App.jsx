@@ -5,6 +5,7 @@ import HomePage from './pages/HomePage.jsx';
 import ShelfPage from './pages/ShelfPage.jsx';
 import AddBookPage from './pages/AddBookPage.jsx';
 import EditBookPage from './pages/EditBookPage.jsx';
+import StatsPage from './pages/StatsPage.jsx';
 
 export default function App() {
   return (
@@ -17,6 +18,7 @@ export default function App() {
             <Route path="/shelf" element={<ShelfPage />} />
             <Route path="/add" element={<AddBookPage />} />
             <Route path="/edit/:id" element={<EditBookPage />} />
+            <Route path="/stats" element={<StatsPage />} />
           </Routes>
         </main>
         <SiteFooter />
