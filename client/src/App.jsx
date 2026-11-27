@@ -1,11 +1,12 @@
-import { BrowserRouter, Routes, Route } from 'react-router';
-import SiteNav from './components/SiteNav.jsx';
-import SiteFooter from './components/SiteFooter.jsx';
-import HomePage from './pages/HomePage.jsx';
-import ShelfPage from './pages/ShelfPage.jsx';
-import AddBookPage from './pages/AddBookPage.jsx';
-import EditBookPage from './pages/EditBookPage.jsx';
-import StatsPage from './pages/StatsPage.jsx';
+import { BrowserRouter, Routes, Route } from "react-router";
+import SiteNav from "./components/SiteNav.jsx";
+import SiteFooter from "./components/SiteFooter.jsx";
+import HomePage from "./pages/HomePage.jsx";
+import ShelfPage from "./pages/ShelfPage.jsx";
+import AddBookPage from "./pages/AddBookPage.jsx";
+import EditBookPage from "./pages/EditBookPage.jsx";
+import BookDetailsPage from "./pages/BookDetailsPage.jsx";
+import StatsPage from "./pages/StatsPage.jsx";
 
 export default function App() {
   return (
@@ -18,6 +19,7 @@ export default function App() {
             <Route path="/shelf" element={<ShelfPage />} />
             <Route path="/add" element={<AddBookPage />} />
             <Route path="/edit/:id" element={<EditBookPage />} />
+            <Route path="/books/:id" element={<BookDetailsPage />} />
             <Route path="/stats" element={<StatsPage />} />
           </Routes>
         </main>

@@ -1,35 +1,16 @@
 import { Link } from "react-router";
 import StarRating from "./StarRating.jsx";
-
-const shelfLabels = {
-  "want-to-read": "Want to read",
-  reading: "Reading",
-  finished: "Finished",
-};
-
-const badgeClasses = {
-  "want-to-read": "bg-sky-100 text-sky-800",
-  reading: "bg-amber-100 text-amber-800",
-  finished: "bg-emerald-100 text-emerald-800",
-};
+import {
+  shelfLabels,
+  badgeClasses,
+  formatLabels,
+  lengthText,
+} from "../bookLabels.js";
 
 const nextShelf = {
   "want-to-read": { status: "reading", label: "Start reading" },
   reading: { status: "finished", label: "Mark as finished" },
 };
-
-const formatLabels = {
-  print: "Print",
-  ebook: "Ebook",
-  audiobook: "Audiobook",
-};
-
-function lengthText(book) {
-  if (book.format === "audiobook") {
-    return book.minutes ? `${book.minutes} min` : "";
-  }
-  return book.pages ? `${book.pages} pages` : "";
-}
 
 export default function BookCard({ book, onRemove, onMove }) {
   const length = lengthText(book);
@@ -43,17 +24,23 @@ export default function BookCard({ book, onRemove, onMove }) {
 
   return (
     <article className="flex h-full flex-col overflow-hidden rounded-xl border border-stone-200 bg-white shadow-sm">
-      {book.cover ? (
-        <img
-          src={book.cover}
-          alt={`Cover of ${book.title}`}
-          className="aspect-2/3 w-full object-cover"
-        />
-      ) : (
-        <div className="flex aspect-2/3 items-center justify-center bg-emerald-50 p-4 text-center text-lg font-semibold text-emerald-700">
-          {book.title}
-        </div>
-      )}
+      <Link
+        to={`/books/${book._id}`}
+        tabIndex={-1}
+        className="block transition-opacity hover:opacity-90"
+      >
+        {book.cover ? (
+          <img
+            src={book.cover}
+            alt={`Cover of ${book.title}`}
+            className="aspect-2/3 w-full object-cover"
+          />
+        ) : (
+          <div className="flex aspect-2/3 items-center justify-center bg-emerald-50 p-4 text-center text-lg font-semibold text-emerald-700">
+            {book.title}
+          </div>
+        )}
+      </Link>
 
       <div className="flex flex-1 flex-col gap-1 p-4">
         <span
@@ -62,7 +49,12 @@ export default function BookCard({ book, onRemove, onMove }) {
           {shelfLabels[book.status]}
         </span>
         <h2 className="font-semibold leading-snug text-stone-800">
-          {book.title}
+          <Link
+            to={`/books/${book._id}`}
+            className="rounded hover:text-emerald-700 hover:underline focus:outline-none focus:ring-2 focus:ring-emerald-600/50"
+          >
+            {book.title}
+          </Link>
         </h2>
         <p className="text-sm text-stone-600">{book.author}</p>
         {book.status === "finished" && book.rating && (
