@@ -14,6 +14,9 @@ function toFormValues(book) {
     format: book.format,
     status: book.status,
     rating: book.rating || '',
+    description: book.description || '',
+    genres: book.genres.join(', '),
+    tags: book.tags.join(', '),
   };
 }
 

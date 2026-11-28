@@ -5,6 +5,13 @@ const labelClasses = 'flex flex-col gap-1 text-sm font-medium text-stone-700';
 const fieldClasses =
   'rounded-md border border-stone-300 bg-white px-3 py-2 text-base font-normal text-stone-800 focus:border-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-600/30';
 
+function toList(text) {
+  return text
+    .split(',')
+    .map((word) => word.trim())
+    .filter((word) => word !== '');
+}
+
 export default function BookForm({ startingBook, onSave, saveLabel }) {
   const [book, setBook] = useState(startingBook);
 
@@ -19,7 +26,7 @@ export default function BookForm({ startingBook, onSave, saveLabel }) {
 
   function submitBook(event) {
     event.preventDefault();
-    onSave(book);
+    onSave({ ...book, genres: toList(book.genres), tags: toList(book.tags) });
   }
 
   return (
@@ -124,6 +131,43 @@ export default function BookForm({ startingBook, onSave, saveLabel }) {
           </span>
         </div>
       )}
+
+      <label className={`${labelClasses} sm:col-span-2`}>
+        Description
+        <textarea
+          name="description"
+          value={book.description}
+          onChange={updateField}
+          rows="4"
+          className={fieldClasses}
+        />
+      </label>
+
+      <label className={labelClasses}>
+        Genres
+        <input
+          name="genres"
+          value={book.genres}
+          onChange={updateField}
+          placeholder="Fantasy, Classics"
+          className={fieldClasses}
+        />
+      </label>
+
+      <label className={labelClasses}>
+        Tags
+        <input
+          name="tags"
+          value={book.tags}
+          onChange={updateField}
+          placeholder="Book club, Borrowed"
+          className={fieldClasses}
+        />
+      </label>
+
+      <p className="-mt-3 text-xs text-stone-500 sm:col-span-2">
+        Separate genres and tags with commas.
+      </p>
 
       <div className="flex justify-end sm:col-span-2">
         <button

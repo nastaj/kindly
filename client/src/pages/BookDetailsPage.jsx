@@ -65,6 +65,12 @@ export default function BookDetailsPage() {
               <StarRating rating={book.rating} />
             )}
 
+            {book.description && (
+              <p className="mt-4 max-w-prose whitespace-pre-line text-stone-700">
+                {book.description}
+              </p>
+            )}
+
             <dl className="mt-4 grid grid-cols-[auto_1fr] gap-x-6 gap-y-1 text-sm">
               <dt className="text-stone-500">Format</dt>
               <dd>{formatLabels[book.format]}</dd>
@@ -77,6 +83,38 @@ export default function BookDetailsPage() {
               <dt className="text-stone-500">Added</dt>
               <dd>{new Date(book.createdAt).toLocaleDateString()}</dd>
             </dl>
+
+            {book.genres.length > 0 && (
+              <div className="mt-4">
+                <h2 className="text-sm font-semibold text-stone-700">Genres</h2>
+                <ul className="mt-2 flex flex-wrap gap-2">
+                  {book.genres.map((genre) => (
+                    <li
+                      key={genre}
+                      className="rounded-full bg-stone-100 px-3 py-1 text-xs text-stone-700"
+                    >
+                      {genre}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {book.tags.length > 0 && (
+              <div className="mt-4">
+                <h2 className="text-sm font-semibold text-stone-700">Tags</h2>
+                <ul className="mt-2 flex flex-wrap gap-2">
+                  {book.tags.map((tag) => (
+                    <li
+                      key={tag}
+                      className="rounded-full border border-emerald-200 px-3 py-1 text-xs text-emerald-800"
+                    >
+                      {tag}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
 
             <Link
               to={`/edit/${book._id}`}

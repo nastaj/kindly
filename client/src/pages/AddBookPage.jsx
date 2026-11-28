@@ -13,6 +13,9 @@ const emptyBook = {
   format: 'print',
   status: 'want-to-read',
   rating: '',
+  description: '',
+  genres: '',
+  tags: '',
 };
 
 export default function AddBookPage() {

@@ -18,6 +18,9 @@ const bookSchema = new mongoose.Schema(
       default: 'want-to-read',
     },
     rating: { type: Number, min: 1, max: 5 },
+    description: { type: String, trim: true },
+    genres: [String],
+    tags: [String],
   },
   { timestamps: true },
 );
